@@ -34,7 +34,7 @@ class War {
             if (MAX_ITERATIONS == i) gameOver = true
         }
 
-        if (getGameWinner() == null) {
+        if (null == getGameWinner()) {
             println("No winner")
             println("Player 1 count: ${players[0].getCardCount()}")
             println("Player 2 count: ${players[1].getCardCount()}")
@@ -94,9 +94,9 @@ class War {
      * values. If there is a tie, initiate war. If there is not a tie
      * give the winner of the round the cards
      *
-     * @arg playerOneCard: the card from the first player
-     * @arg playerTwoCard: the card from the second player
-     * @arg results: the location in the player array for the winner or TIE
+     * @param playerOneCard: the card from the first player
+     * @param playerTwoCard: the card from the second player
+     * @param results: the location in the player array for the winner or TIE
      */
     private fun giveWinnerCards(playerOneCard: Card, playerTwoCard: Card, results: Int) {
         if (TIE == results) {
@@ -115,8 +115,8 @@ class War {
      * other. The player with the higher card gets all cards
      * that were previously played.
      *
-     * @arg card1: player one's card
-     * @arg card2: player two's card
+     * @param card1: player one's card
+     * @param card2: player two's card
      */
     private fun initiateWar(card1: Card, card2: Card) {
         val cards: MutableList<Card> = mutableListOf()

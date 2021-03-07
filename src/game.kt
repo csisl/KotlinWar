@@ -1,8 +1,8 @@
 
 fun main(args: Array<String>) {
 
-    val player1 = Player("steph")
-    val player2 = Player("joules")
+    val player1 = Player("mon")
+    val player2 = Player("key")
 
     val deck = Deck()
     deck.shuffleDeck()
