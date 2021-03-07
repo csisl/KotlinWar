@@ -4,7 +4,7 @@ class War {
     private val PLAYER_ONE_POS = 0
     private val PLAYER_TWO_POS = 1
     private val TIE = 2
-    private val MAX_ITERATIONS = 10000
+    private val MAX_ITERATIONS = 3000
     private val players: ArrayList<Player> = ArrayList(NUM_OF_PLAYERS)
 
     /**
@@ -31,16 +31,15 @@ class War {
             giveWinnerCards(playerOneCard, playerTwoCard, winner)
             gameOver = getGameOverStatus()
             i++
-            if (i == MAX_ITERATIONS) gameOver = true
+            if (MAX_ITERATIONS == i) gameOver = true
         }
 
-        println("loops: $i")
         if (getGameWinner() == null) {
             println("No winner")
             println("Player 1 count: ${players[0].getCardCount()}")
             println("Player 2 count: ${players[1].getCardCount()}")
         } else {
-            println("Game winner: ${getGameWinner()!!.getName()}")
+            println("Game winner after $i rounds: ${getGameWinner()!!.getName()}")
         }
     }
 

@@ -3,7 +3,11 @@ class Hand {
     private val hand: MutableList<Card> = mutableListOf<Card>()
 
     fun addCard(card: Card) {
-        hand.add(card)
+        var pos = 0
+        if (hand.size > 0) {
+            pos = (0..(hand.size - 1)).random()
+        }
+        hand.add(pos, card)
     }
 
     fun playCard(): Card {
