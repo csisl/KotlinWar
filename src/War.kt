@@ -27,8 +27,7 @@ class War {
 
         while (!gameOver) {
             val (playerOneCard, playerTwoCard) = playRound()
-            val winner = evaluateCards(playerOneCard, playerTwoCard)
-            giveWinnerCards(playerOneCard, playerTwoCard, winner)
+            evaluateRound(playerOneCard, playerTwoCard)
             gameOver = getGameOverStatus()
             i++
             if (MAX_ITERATIONS == i) gameOver = true
@@ -74,6 +73,18 @@ class War {
         return arrayOf(playerOneCard, playerTwoCard)
     }
 
+    private fun evaluateRound(playerOneCard: Card, playerTwoCard: Card) {
+        val result = determineRoundStatus(playerOneCard, playerTwoCard)
+        if (TIE == result) {
+            println("WAR!")
+            initiateWar(playerOneCard, playerTwoCard)
+        } else {
+            println("${players[result].getName()} wins the round!")
+            players[result].addCard(playerOneCard)
+            players[result].addCard(playerTwoCard)
+        }
+    }
+
     /**
      * Evaluate the two cards that were played.
      *
@@ -81,31 +92,11 @@ class War {
      *   The position in the `players` array for the player who
      *   won the round (PLAYER_ONE or PLAYER_TWO), or 2 for a tie (TIE).
      */
-    private fun evaluateCards(playerOneCard: Card, playerTwoCard: Card): Int {
+    private fun determineRoundStatus(playerOneCard: Card, playerTwoCard: Card): Int {
         return when {
             playerOneCard.cardValue > playerTwoCard.cardValue -> PLAYER_ONE_POS
             playerTwoCard.cardValue > playerOneCard.cardValue -> PLAYER_TWO_POS
             else -> TIE
-        }
-    }
-
-    /**
-     * Determine the winner when two cards are played by comparing
-     * values. If there is a tie, initiate war. If there is not a tie
-     * give the winner of the round the cards
-     *
-     * @param playerOneCard: the card from the first player
-     * @param playerTwoCard: the card from the second player
-     * @param results: the location in the player array for the winner or TIE
-     */
-    private fun giveWinnerCards(playerOneCard: Card, playerTwoCard: Card, results: Int) {
-        if (TIE == results) {
-            println("WAR!")
-            initiateWar(playerOneCard, playerTwoCard)
-        } else {
-            println("${players[results].getName()} wins the round!")
-            players[results].addCard(playerOneCard)
-            players[results].addCard(playerTwoCard)
         }
     }
 
@@ -126,7 +117,7 @@ class War {
         cards.add(card2)
         while (!winner) {
             val (playerOneCard, playerTwoCard) = playRound()
-            roundResults = evaluateCards(playerOneCard, playerTwoCard)
+            roundResults = determineRoundStatus(playerOneCard, playerTwoCard)
             if (roundResults != TIE) winner = true
             cards.add(playerOneCard)
             cards.add(playerTwoCard)
